@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+*.pyc
+# large external data: fetch with ./fetch_data.sh instead of committing
+MorphoLEX_en.xlsx
