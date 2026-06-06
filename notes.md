@@ -461,3 +461,65 @@ and ideally a controlled test that isolates POSITION from CATEGORY (e.g. compare
 heavily prefixing language to a heavily suffixing one on matched productive
 morphology, or compare prefix vs suffix within a single language's *neologisms* to
 watch lexicalization happen).
+
+## Counterfactual hunt: is there a case where SUFFIXES generate more novel words?
+
+Important logical point first: the serial-position hypothesis is about temporal
+processing order, and morpheme time-order is universal in speech (prefix before
+root, root before suffix). So the strict theory predicts NO concatenative spoken
+language reverses the effect; a genuine reversal would falsify it. We cannot
+propose a counterfactual the theory permits, only hunt for one.
+
+The sharpest hunt is not a whole language but a morpheme CLASS, because it
+dissociates serial-position from the main rival account. The rival: the asymmetry
+is about grammatical FUNCTION, not position. English suffixes are class-changing
+(verb -> noun, etc.), which forces regularity/transparency; English prefixes are
+class-maintaining meaning-modifiers, free to drift. In English these are
+confounded (the suffixes happen to be the class-changing ones). They come apart on
+**class-maintaining suffixes**, above all diminutives/augmentatives
+(Spanish bolso->bolsillo "pocket", manzana->manzanilla "chamomile",
+ventana->ventanilla "ticket window", zapato->zapatilla "slipper").
+
+Test (position held constant: both are suffixes; vary grammatical function):
+Spanish and Italian, Numberbatch, vowel-restoration repair (bolsillo->bols->bolso).
+
+```
+language  diminutive suffixes   class-changing suffixes   p
+Spanish   28.1% novel (n=481)   10.2% novel (n=1703)      3.8e-19
+Italian   23.6% novel (n=1077)   8.3% novel (n=2398)      8.3e-38
+```
+
+Diminutive (class-maintaining) suffixes drift ~2.8x more than class-changing
+suffixes, with position constant. They even exceed the prefix novelty rates in the
+same languages (es prefix 20.6%, it 18.1%). So a SUFFIX subtype out-generates
+prefixes. **This is the counterfactual.**
+
+Interpretation: serial position alone is NOT sufficient. Grammatical function
+(class-changing vs class-maintaining) is an independent, strong driver. A refined
+hypothesis that fits everything so far: affixes that do NOT impose a regular
+class-changing grammatical function bind holistically and drift. In English those
+are exactly the prefixes (all class-maintaining); cross-linguistically they also
+include evaluative suffixes. Serial position may still contribute (the LLM
+left-to-right result suggests order matters), but it is one factor, not the whole
+story. The honest model is two-factor: position AND function, confounded in
+English, separable in the Romance diminutives.
+
+Caveat: diminutive affixes (ito, ina, azo) are short and attract more orthographic
+false splits than long class-changing affixes (cion, miento), and the most-novel
+examples include junk (vagina = ina+vago). Some of the magnitude is artifact. But
+the direction is large, significant in two languages, and matches a strong,
+textbook linguistic prior (diminutives are classic lexicalization machines), so
+the qualitative conclusion is safe; the exact magnitude is not.
+
+Other candidate hunting grounds (not yet run), ranked by how decisive they would be:
+1. **Class-maintaining suffixes more broadly** (the test above; could extend to
+   Russian -ik/-ok, Portuguese -inho, German -chen/-lein diminutives).
+2. **Agglutinative suffixing languages** (Turkish, Finnish, Hungarian, Japanese,
+   Korean): the theory predicts their suffixal derivation stays transparent
+   (root-first). Heavy suffix lexicalization there would strain it. Best big-data
+   test; Numberbatch covers tr/fi/hu/ja/ko. No within-language prefix contrast.
+3. **Right-to-left scripts** (Hebrew, Arabic): dissociate visual reading order
+   from speech-time order. Theory says script direction should not matter
+   (speech is still root-first for suffixes). Templatic morphology complicates.
+4. **Bantu** (Swahili): derivational morphology is suffixal (verb extensions),
+   inflection is prefixal; test whether the suffixal derivation lexicalizes.
