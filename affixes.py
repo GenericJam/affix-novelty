@@ -1,0 +1,26 @@
+"""Hand-curated common derivational affixes per language. Conservative: only
+clearly-real affixes, length >= 2. Imperfect (author is not a native speaker of
+all of these); we rely on the population comparison and the offset correction,
+not on any single decomposition being right."""
+
+PREFIXES = {
+    "es": ["re", "des", "in", "im", "pre", "pro", "con", "com", "sub", "ex",
+           "entre", "sobre", "anti", "auto", "contra", "super", "inter", "trans"],
+    "fr": ["re", "ré", "dé", "des", "in", "im", "pré", "pro", "con", "com",
+           "sur", "sous", "entre", "anti", "auto", "contre", "super", "inter", "trans"],
+    "it": ["ri", "in", "dis", "pre", "pro", "con", "com", "sotto", "sopra",
+           "anti", "auto", "contro", "super", "inter", "trans"],
+    "pt": ["re", "des", "in", "im", "pre", "pro", "con", "com", "sub", "ex",
+           "entre", "sobre", "anti", "auto", "contra", "super", "inter", "trans"],
+}
+SUFFIXES = {
+    "es": ["cion", "ción", "sion", "sión", "miento", "dad", "tad", "eza",
+           "ura", "anza", "encia", "ancia", "ismo", "ista", "able", "ible",
+           "oso", "osa", "mente", "dor", "dora", "aje", "ero", "era"],
+    "fr": ["tion", "sion", "ment", "té", "eur", "euse", "age", "ance",
+           "ence", "isme", "iste", "able", "ible", "eux", "ette", "erie", "oir"],
+    "it": ["zione", "sione", "mento", "tà", "ezza", "ura", "anza", "enza",
+           "ismo", "ista", "abile", "ibile", "oso", "mente", "tore", "aggio"],
+    "pt": ["ção", "são", "mento", "dade", "eza", "ura", "ança", "ência",
+           "ismo", "ista", "ável", "ível", "oso", "mente", "dor", "agem"],
+}

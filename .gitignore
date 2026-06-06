@@ -1,5 +1,8 @@
 .venv/
 __pycache__/
 *.pyc
-# large external data: fetch with ./fetch_data.sh instead of committing
+# large external data: fetch with ./fetch_data.sh, do not commit
 MorphoLEX_en.xlsx
+histwords/
+numberbatch/
+*.npz
