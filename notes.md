@@ -583,3 +583,46 @@ distributional account. This single control decides whether the LLM result is a
 genuine processing-order finding or a restatement of Lazaridou 2013.
 
 Full citations and the referee-objections list are in `LITERATURE.md`.
+
+## Test 7 result: BERT control. NEGATIVE. Autoregressive interpretation REFUTED.
+
+The decisive control the review demanded. Compared an autoregressive model (GPT-2)
+with a bidirectional one (BERT), identical extraction (mean-pooled sub-token
+last-layer hidden states, centered + top-1 PC removed), so architecture is the
+only difference.
+
+```
+model               prefix_nov  suffix_nov  ratio   gap     p
+gpt2 (autoregress.)    22.8%       14.1%     1.62  +0.134  7.0e-51
+bert (bidirectional)   20.8%       13.2%     1.57  +0.118  9.8e-84
+```
+
+BERT shows the asymmetry essentially as strongly as GPT-2 (ratio 1.57 vs 1.62, a
+noise-level difference; the tiny gap difference is not meaningfully attributable
+to architecture given the confounds of different tokenizer/training/dims). So the
+asymmetry is NOT a signature of left-to-right autoregressive processing. A
+bidirectional model that never "drives through the prefix" reproduces it.
+
+**Conclusion: the autoregressive / substrate-independence interpretation is
+disconfirmed.** The prefix<suffix asymmetry is a DISTRIBUTIONAL property, baked
+into corpus co-occurrence statistics (exactly why static embeddings, Lazaridou
+2013, showed it too). An LM of either architecture simply reflects the already-
+lexicalized state of the language. The embedding results across this whole project
+(static, GPT-2, BERT) measure the OUTCOME (current non-compositionality), not the
+MECHANISM of how words got that way.
+
+What this does to the thesis:
+- The robust empirical OUTCOME stands: prefixed words are less compositional than
+  suffixed, cross-linguistically, and class-maintaining diminutive suffixes drift
+  more than class-changing ones (the position-vs-function dissociation).
+- The serial-position MECHANISM for human lexicalization is neither confirmed nor
+  refuted by LMs (they only show the outcome). Its closest support remains the
+  human-side processing argument (Cutler, Hawkins & Gilligan 1985). The diminutive
+  dissociation actively favors grammatical FUNCTION over pure position.
+- The flashy "a next-token model proves it is about processing order" claim is
+  dead. Honest negative result; the control did its job.
+
+The paper (PAPER.md) was revised to report this control and reframe the LLM
+section and discussion accordingly: the LLM result is now "the asymmetry is a
+distributional property present in both autoregressive and bidirectional LMs", not
+evidence for processing order.

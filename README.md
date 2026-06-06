@@ -18,13 +18,18 @@ fingerprint of lexicalization.
 ![summary](fig3_summary.png)
 
 > **Extended study.** This README documents the original English analysis. The
-> project was later reframed around a **serial-position hypothesis** (the first
-> morpheme you traverse to reach a word becomes its retrieval anchor) and extended
-> with five further tests: robustness across embeddings, a diachronic test, four
-> Romance languages, Arabic, and a language-model probe showing the same asymmetry
-> in GPT-2's internal representations. See **[PAPER.md](PAPER.md)** for the short
-> paper draft and **[notes.md](notes.md)** for the full research log including dead
-> ends and honest caveats.
+> project was later reframed around two competing accounts of the asymmetry, a
+> **serial-position** account (the first morpheme you traverse is the retrieval
+> anchor) and a **grammatical-function** account, and extended with further tests:
+> robustness across embeddings, a diachronic test, four Romance languages, Arabic
+> and agglutinative languages, and a language-model probe with a bidirectional
+> control. Two of those tests constrain the explanation: a diminutive
+> counterexample favors grammatical function over position, and a BERT-vs-GPT-2
+> control shows the language-model asymmetry is distributional, not a product of
+> autoregressive processing. See **[PAPER.md](PAPER.md)** for the short paper
+> draft, **[notes.md](notes.md)** for the full research log including dead ends and
+> reversals, and **[LITERATURE.md](LITERATURE.md)** for the novelty assessment and
+> closest prior work.
 
 | measure | prefix | suffix |
 |---|---|---|
