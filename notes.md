@@ -626,3 +626,59 @@ The paper (PAPER.md) was revised to report this control and reframe the LLM
 section and discussion accordingly: the LLM result is now "the asymmetry is a
 distributional property present in both autoregressive and bidirectional LMs", not
 evidence for processing order.
+
+## Methodological correction (Kevin): bifurcate human vs LLM tracks
+
+Do NOT lump the LLM results with the human results. Reason (sharper than first
+stated): the LLMs are TRAINED ON HUMAN TEXT, so they are downstream of the human
+data. An LLM reproducing the human asymmetry is the model learning the human
+distribution, not independent corroboration; lumping them double-counts. Two
+separate tracks:
+- HUMAN track: facts about human language (the object of study). All the
+  static-embedding, morphological, diachronic, cross-linguistic results.
+- LLM track: how an LLM internally organizes morphology. Only independently
+  interesting where it DIVERGES from the human distributional baseline. Our
+  control found no divergence (GPT-2 ~ BERT), so the LLM track says only: LLMs
+  inherit the human distribution; architecture does not matter. To show a genuine
+  shared MECHANISM (not mere inheritance) you would need the LLM to do something
+  the training distribution did not hand it, e.g. lexicalize NONCE affixed words
+  the way humans would. Separate future test.
+
+## Human-only reanalysis: simple function hypothesis FAILS; referentiality emerges
+
+Clean within-English test (validated MorphoLEX, GloVe), three groups:
+```
+group                         mean_comp   novel<0.15
+prefix (class-maintaining)      +0.265      24.6%
+suffix, class-maintaining       +0.374      15.6%   <- MOST transparent, not least
+suffix, class-changing          +0.302      21.0%
+```
+The simple FUNCTION hypothesis (class-changing vs class-maintaining) is REJECTED:
+class-maintaining suffixes are the most transparent. The earlier "function beats
+position" reading from the Romance diminutives over-generalized; I had conflated
+"class-maintaining" with "diminutive". They are different (the English CM group is
+dominated by regular, transparent -ism/-ist).
+
+But the per-suffix gradient reveals a better variable, cutting across POS:
+- transparent end: -ness(3.3%), -est(0.5%), -ism(4.3%), -ics(0%), -ity(11.5%),
+  -acy, -ancy, -ion. These derive ABSTRACT qualities/states/degrees.
+- drifty end: -er/-or (agent/instrument), -age, -ling, -ster, -ory(place),
+  -ine/-ite/-ate (substances, e.g. chemical names), -oid (shape). These NAME
+  CONCRETE things.
+
+Hypothesis the human data SUGGEST: the driver of lexicalization is REFERENTIALITY /
+CONCRETENESS, not affix position and not POS-change. A derived word that names a
+specific thing in the world (agent, instrument, substance, place, diminutive
+object) acquires real-world properties beyond its parts and drifts; a word for an
+abstract quality has no referent to specialize and stays compositional. This
+subsumes the Romance diminutives (bolsillo = a specific object) and reframes them.
+
+Caveats: this is POST-HOC, read off a per-suffix table with some noisy/false-split
+cells (-ar = dollar/grammar, -ite includes proper/mineral names). -ist names a
+person yet stays transparent (artist = one who does art), so referentiality is not
+perfectly clean either. NOT a confirmed result.
+
+Clean confirmatory test to run next (no affix hand-coding): correlate each derived
+word's NON-compositionality with its CONCRETENESS rating (Brysbaert et al. 2014,
+40k English words, free). If concrete derived words drift more than abstract ones,
+referentiality is supported on pure human data. This is the principled follow-up.
