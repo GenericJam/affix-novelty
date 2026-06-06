@@ -523,3 +523,63 @@ Other candidate hunting grounds (not yet run), ranked by how decisive they would
    (speech is still root-first for suffixes). Templatic morphology complicates.
 4. **Bantu** (Swahili): derivational morphology is suffixal (verb extensions),
    inflection is prefixal; test whether the suffixal derivation lexicalizes.
+
+## Test 6 result: agglutinative suffixing (Turkish, Finnish). INCONCLUSIVE.
+
+Turkish and Finnish are heavily suffixing with almost no prefixes, so no
+within-language prefix contrast. The serial-position account predicts their
+suffixal derivation stays transparent (root is first = anchor).
+
+```
+language  class-changing suffixes   diminutive
+Turkish   11.7% novel (n=1086)      no decompositions (cik undergoes consonant change)
+Finnish   20.2% novel (n=1521)      11.0% (-nen, but mostly adjective marker, not a real diminutive)
+```
+
+Turkish leans transparent (11.7%, similar to the Romance class-changing level),
+consistent with the prediction. Finnish came out noisier (20.2%) but inspection
+shows that is mostly false splits from consonant gradation defeating the crude
+free-root match (yllatys->ylla, kataja->kata). The diminutive split did not work:
+Turkish -cik triggers consonant alternation so few free-root matches survived, and
+Finnish -nen is an adjective marker more than a diminutive (examples were
+vammainen, yleinen). Verdict: INCONCLUSIVE. A real agglutinative test needs proper
+morphological analyzers (Zemberek for Turkish, Omorfi/Voikko for Finnish) to
+separate derivation from inflection and handle vowel harmony / gradation. Turkish
+is mildly supportive; Finnish is uninterpretable as run.
+
+## Literature positioning. THE IDEA IS PARTLY FORESHADOWED (see LITERATURE.md).
+
+Three-strand review. The honest finding: the components mostly exist; our novel
+contributions are the synthesis and two specific results. Closest ancestors:
+- **Cutler, Hawkins & Gilligan 1985, "The suffixing preference: a processing
+  explanation."** Already argue word beginnings are the access cue and prefixes
+  are costly *because they precede the stem* (serial position), explaining the
+  typological suffixing preference. They do NOT derive a semantic-drift
+  consequence. ~60% of our premise. Our move: convert it into a diachronic
+  semantic-drift prediction about existing lexemes.
+- **Lazaridou et al. 2013.** Owns the additive offset metric we use; the
+  prefix<suffix compositionality asymmetry may already be foreshadowed there.
+  (Must read directly to confirm.)
+- **Stupak & Baayen 2022.** German particle verbs less transparent than
+  suffixation, same direction as our headline, different construction.
+- **Hay 2001.** Frequency drives holistic storage and opacity, but via *relative*
+  base:derived frequency, not position. Note: Stupak & Baayen report POSITIVE
+  frequency-transparency, opposite to our absolute-frequency finding; must
+  reconcile (different frequency variable).
+- **Jurafsky 1996.** Diminutive drift documented, but not via the class-changing
+  vs class-maintaining contrast.
+
+Genuinely novel (defensible): (1) the position-vs-function dissociation via
+diminutives (strongest); (2) the autoregressive-LLM substrate-independence result
+(needs a BERT control to rule out a pure distributional artifact); (3) breaking
+diachronic change down by morphological type (unaddressed, but our result was
+weak). NOT novel: the metric, the basic transparency measurement, and arguably the
+bare prefix<suffix asymmetry.
+
+**Highest-value next experiment (flagged by the review):** add a bidirectional
+baseline (BERT) to the LLM test. If BERT shows a weaker/absent asymmetry, the
+autoregressive-order interpretation is supported; if equal, it collapses to a
+distributional account. This single control decides whether the LLM result is a
+genuine processing-order finding or a restatement of Lazaridou 2013.
+
+Full citations and the referee-objections list are in `LITERATURE.md`.

@@ -3,7 +3,7 @@ vectors (single alphabetic words only) to compact .npz files."""
 import gzip, numpy as np
 
 SRC = "numberbatch/numberbatch-19.08.txt.gz"
-LANGS = {"en", "es", "fr", "it", "pt", "ar"}
+LANGS = {"tr", "fi", "de", "ru"}  # added for agglutinative + diminutive-broadening tests
 
 buf = {l: ([], []) for l in LANGS}
 with gzip.open(SRC, "rt", encoding="utf-8") as f:
