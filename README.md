@@ -17,6 +17,15 @@ fingerprint of lexicalization.
 
 ![summary](fig3_summary.png)
 
+> **Extended study.** This README documents the original English analysis. The
+> project was later reframed around a **serial-position hypothesis** (the first
+> morpheme you traverse to reach a word becomes its retrieval anchor) and extended
+> with five further tests: robustness across embeddings, a diachronic test, four
+> Romance languages, Arabic, and a language-model probe showing the same asymmetry
+> in GPT-2's internal representations. See **[PAPER.md](PAPER.md)** for the short
+> paper draft and **[notes.md](notes.md)** for the full research log including dead
+> ends and honest caveats.
+
 | measure | prefix | suffix |
 |---|---|---|
 | words analyzed (distinct lexemes) | 1,658 | 7,053 |
