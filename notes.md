@@ -727,3 +727,27 @@ novel prefix word, while the cleaner suffix offset transfers well. Two-pass offs
 cleaning should mitigate but may not fully. Clean control needed: learn offsets from
 transparent-only real words (top-quartile comp); if the novel-prefix gap persists,
 the bias is real; if it collapses, contamination explained it.
+
+## Test 10 result: nonce control (LLM track). Confound REJECTED; bias is REAL.
+
+Relearned each affix's offset from only its most-transparent real words (top fraction
+by comp), then re-scored the novel forms, sweeping the fraction. Contamination
+predicts the gap shrinks toward 0 as the offset gets cleaner.
+```
+offset from top-frac transparent real words:
+  frac   novel pfx  novel sfx   gap     p(pfx<sfx)
+  1.00     0.395     0.683     +0.287    1.2e-41
+  0.50     0.390     0.679     +0.289    5.0e-35
+  0.25     0.363     0.672     +0.308    5.9e-34
+  0.10     0.288     0.650     +0.362    2.0e-39
+```
+The gap does NOT shrink; it grows slightly (+0.29 -> +0.36). Contamination is
+REJECTED. GPT-2 represents novel, never-seen, genuinely-compositional prefixed forms
+as non-compositional even relative to the CLEANEST prefix shift. So the model has a
+PRODUCTIVE, GENERALIZING bias: it applies "prefixed forms tend to be opaque" to words
+it never saw, rather than memorizing per-word. This is a real LLM-track finding about
+the model's inductive bias / how it encodes morphology. Origin is still the human
+distribution (real prefixes ARE more opaque, the model generalized that), but it is
+generalization, not memorization. Residual caveat: cannot fully exclude tokenization
+artifacts of novel prefixed vs suffixed strings; a BERT version of the nonce probe
+would be the next symmetric check. nonce_control.py.

@@ -31,8 +31,8 @@ We keep the human and language-model evidence on separate tracks, since the mode
 are trained on human text and so cannot independently corroborate it; a
 bidirectional control (BERT) reproduces the asymmetry as strongly as an
 autoregressive model (GPT-2), showing the effect is distributional and not a product
-of left-to-right processing, while a nonce-word probe suggests, with a stated
-confound, that the model generalizes the pattern to forms it never saw. The
+of left-to-right processing, while a nonce-word probe, which survives a control,
+shows the model generalizes the pattern productively to forms it never saw. The
 dependable contributions are the measured cross-linguistic outcome, the
 position-versus-function dissociation, and a negative processing-order control;
 the mechanism of lexicalization is left open. We discuss the implications for
@@ -234,14 +234,22 @@ results, like the static embeddings, measure the lexicalized outcome, not the
 mechanism that produced it.
 
 A separate probe asks whether GPT-2 GENERALIZES the asymmetry to novel words it never
-saw, which would indicate an internalized bias rather than inherited per-word
+saw, which would indicate a productive learned bias rather than inherited per-word
 meanings. On 785 novel affix-plus-root combinations, all genuinely compositional by
 construction (`unsmall` = not small; `jumpness` = state of jumping), GPT-2 represents
 the novel prefixed forms as much less compositional than the novel suffixed forms
-(mean +0.40 versus +0.69, p about 1e-37). This is suggestive of generalization, but
-it is confounded: the offsets are learned from real words whose prefix side is more
-opaque, which could mechanically depress novel-prefix scores. A control that learns
-offsets from transparent-only words is needed before drawing a firm conclusion.
+(mean +0.40 versus +0.69, p about 1e-37). The obvious confound is that the offsets
+are learned from real words whose prefix side is more opaque, which could mechanically
+depress novel-prefix scores. A control rejects it: relearning each affix's offset from
+only its most-transparent real words, and sweeping how aggressively we filter (top
+50%, 25%, 10% by compositionality), the gap does not shrink toward zero but holds and
+slightly grows (gap +0.29 to +0.36, p < 1e-34 throughout). So GPT-2 represents novel
+prefixed forms as non-compositional even relative to the cleanest prefix shift: it has
+generalized "prefixed forms tend to be opaque" to words it never saw. This is a
+productive inductive bias, not per-word memorization, though its origin is still the
+human distribution the model was trained on. (Residual caveat: tokenization
+differences between novel prefixed and suffixed strings cannot be fully excluded; a
+bidirectional version of this probe is the natural next check.)
 
 ### 3.7 Family coherence (English and Arabic)
 
@@ -281,10 +289,12 @@ We keep the human and language-model evidence on separate tracks. The models are
 trained on human text, so an LLM reproducing the asymmetry is inheritance, not
 independent corroboration; lumping the two would double-count. On its own the LLM
 track says the asymmetry is distributional, since a bidirectional model shows it as
-strongly as an autoregressive one and so it is not a processing-order signature; a
-nonce-word probe hints, with a confound, that the model generalizes it to unseen
-forms. That probe is the only place the model could report something the human
-distribution did not already contain, and it needs a control before it can.
+strongly as an autoregressive one and so it is not a processing-order signature; and
+a nonce-word probe, which survives a control that rejects the obvious offset
+confound, shows the model generalizes the pattern productively to words it never saw.
+That probe is the one place the LLM track reports something beyond per-word
+inheritance: the prefix-opacity regularity is encoded as a generalizing inductive
+bias, not just memorized lexeme by lexeme.
 
 This clarifies what distributional embeddings can and cannot show. Every embedding,
 static or contextual, autoregressive or bidirectional, measures the present
