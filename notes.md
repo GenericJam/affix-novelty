@@ -751,3 +751,21 @@ distribution (real prefixes ARE more opaque, the model generalized that), but it
 generalization, not memorization. Residual caveat: cannot fully exclude tokenization
 artifacts of novel prefixed vs suffixed strings; a BERT version of the nonce probe
 would be the next symmetric check. nonce_control.py.
+
+## Test 11 result: BERT nonce probe. Bias is architecture- AND tokenizer-independent.
+
+Ran the nonce probe + transparent-offset control for GPT-2 and BERT side by side
+(same mean-pooled extraction). nonce_bert.py.
+```
+gpt2              frac 1.00  gap +0.287  p 1.2e-41    frac 0.25  gap +0.308  p 5.9e-34
+bert-base-uncased frac 1.00  gap +0.386  p 3.9e-118   frac 0.25  gap +0.377  p 8.3e-117
+```
+BERT shows the novel prefix<suffix gap even MORE strongly than GPT-2, and it survives
+the control. So the generalizing bias is (a) architecture-independent: a bidirectional
+model that never reads left to right generalizes it too, consistent with the earlier
+real-word BERT control (the asymmetry is distributional, not processing-order); and
+(b) tokenizer-independent: BERT WordPiece and GPT-2 byte-BPE both show it, killing the
+residual tokenization-artifact caveat. Net LLM-track conclusion (now firm): both LMs
+encode "prefixed forms tend to be non-compositional" as a productive inductive bias
+learned from the human distribution and applied to unseen forms. The bias is real and
+robust; it just is not evidence for a left-to-right processing mechanism.

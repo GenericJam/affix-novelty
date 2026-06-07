@@ -247,9 +247,11 @@ slightly grows (gap +0.29 to +0.36, p < 1e-34 throughout). So GPT-2 represents n
 prefixed forms as non-compositional even relative to the cleanest prefix shift: it has
 generalized "prefixed forms tend to be opaque" to words it never saw. This is a
 productive inductive bias, not per-word memorization, though its origin is still the
-human distribution the model was trained on. (Residual caveat: tokenization
-differences between novel prefixed and suffixed strings cannot be fully excluded; a
-bidirectional version of this probe is the natural next check.)
+human distribution the model was trained on. A bidirectional version of the probe
+settles the remaining checks: BERT (WordPiece) shows the novel-form gap even more
+strongly than GPT-2 (gap +0.39 versus +0.29, p < 1e-100) and it survives the same
+control, so the bias is architecture-independent (a model that never reads left to
+right has it too) and not a single-tokenizer artifact.
 
 ### 3.7 Family coherence (English and Arabic)
 
