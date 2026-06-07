@@ -16,3 +16,7 @@ mkdir -p numberbatch
 curl -fSL -o numberbatch/numberbatch-19.08.txt.gz \
   "https://conceptnet.s3.amazonaws.com/downloads/2019/numberbatch/numberbatch-19.08.txt.gz"
 echo "now run: python numberbatch_extract.py   (writes per-language nb_*.npz)"
+
+# --- referentiality test: Brysbaert et al. (2014) concreteness norms (~2 MB) ---
+curl -fSL -o brysbaert_concreteness.xlsx \
+  "https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-013-0403-5/MediaObjects/13428_2013_403_MOESM1_ESM.xlsx"

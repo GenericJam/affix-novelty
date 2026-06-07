@@ -13,34 +13,92 @@ Prediction under class-changing: diminutives drift like prefixes (high novelty).
 Spanish and Italian, Numberbatch vectors. Vowel-restoration repair handles the
 root alternation (bolsillo -> bols -> bolso; manzanilla -> manzan -> manzana).
 """
+
 import numpy as np
-from wordfreq import top_n_list, zipf_frequency, word_frequency
+from wordfreq import top_n_list, word_frequency, zipf_frequency
+
 import core
 from nbkv import NBKV
 
 GROUPS = {
     "es": {
-        "diminutive": ["ito", "ita", "illo", "illa", "ico", "ica", "ín",
-                       "ino", "ina", "uelo", "ote", "azo", "ejo"],
-        "class_changing": ["ción", "sión", "miento", "dad", "tad", "eza",
-                           "ura", "ismo", "ista", "able", "ible", "oso",
-                           "dor", "mente", "anza", "encia"],
+        "diminutive": [
+            "ito",
+            "ita",
+            "illo",
+            "illa",
+            "ico",
+            "ica",
+            "ín",
+            "ino",
+            "ina",
+            "uelo",
+            "ote",
+            "azo",
+            "ejo",
+        ],
+        "class_changing": [
+            "ción",
+            "sión",
+            "miento",
+            "dad",
+            "tad",
+            "eza",
+            "ura",
+            "ismo",
+            "ista",
+            "able",
+            "ible",
+            "oso",
+            "dor",
+            "mente",
+            "anza",
+            "encia",
+        ],
     },
     "it": {
-        "diminutive": ["ino", "ina", "etto", "etta", "ello", "ella",
-                       "uccio", "otto", "one", "ona", "accio"],
-        "class_changing": ["zione", "sione", "mento", "tà", "ezza", "ura",
-                           "ismo", "ista", "abile", "ibile", "oso", "mente",
-                           "tore", "aggio", "anza", "enza"],
+        "diminutive": [
+            "ino",
+            "ina",
+            "etto",
+            "etta",
+            "ello",
+            "ella",
+            "uccio",
+            "otto",
+            "one",
+            "ona",
+            "accio",
+        ],
+        "class_changing": [
+            "zione",
+            "sione",
+            "mento",
+            "tà",
+            "ezza",
+            "ura",
+            "ismo",
+            "ista",
+            "abile",
+            "ibile",
+            "oso",
+            "mente",
+            "tore",
+            "aggio",
+            "anza",
+            "enza",
+        ],
     },
 }
 
 
 def build(lang, suffixes, label, kv, valid):
     suffixes = sorted(set(suffixes), key=len, reverse=True)
-    cands = [w for w in top_n_list(lang, 60000)
-             if w.isalpha() and len(w) >= 5 and w in kv
-             and zipf_frequency(w, lang) >= 2.0]
+    cands = [
+        w
+        for w in top_n_list(lang, 60000)
+        if w.isalpha() and len(w) >= 5 and w in kv and zipf_frequency(w, lang) >= 2.0
+    ]
 
     def root_of(stub):
         for c in (stub, stub + "o", stub + "a", stub + "e", stub + "ón"):
@@ -56,17 +114,28 @@ def build(lang, suffixes, label, kv, valid):
                 r = root_of(w[: -len(af)])
                 if r and r != w and (af, r) not in seen:
                     seen.add((af, r))
-                    entries.append(dict(word=w, side="suffix", affix=af, root=r,
-                                        group=label, freq=word_frequency(w, lang),
-                                        zipf=zipf_frequency(w, lang)))
+                    entries.append(
+                        {
+                            "word": w,
+                            "side": "suffix",
+                            "affix": af,
+                            "root": r,
+                            "group": label,
+                            "freq": word_frequency(w, lang),
+                            "zipf": zipf_frequency(w, lang),
+                        }
+                    )
                     break
     return entries
 
 
 def run(lang):
     kv = NBKV(lang)
-    valid = {w for w in top_n_list(lang, 60000)
-             if w.isalpha() and zipf_frequency(w, lang) >= 2.8 and w in kv}
+    valid = {
+        w
+        for w in top_n_list(lang, 60000)
+        if w.isalpha() and zipf_frequency(w, lang) >= 2.8 and w in kv
+    }
     dim = build(lang, GROUPS[lang]["diminutive"], "diminutive", kv, valid)
     cls = build(lang, GROUPS[lang]["class_changing"], "class_changing", kv, valid)
     # score together so offsets are learned per-affix consistently
@@ -78,9 +147,12 @@ def run(lang):
         nov = float((c < 0.15).mean()) if len(c) else float("nan")
         print(f"  {label:14s} n={len(g):4d}  mean_comp={c.mean():+.3f}  novel<0.15={nov:.1%}")
         ex = sorted(g, key=lambda e: e["comp"])[:8]
-        print("     most-novel: " +
-              ", ".join(f"{e['word']}({e['affix']}->{e['root']},{e['comp']:+.2f})" for e in ex))
+        print(
+            "     most-novel: "
+            + ", ".join(f"{e['word']}({e['affix']}->{e['root']},{e['comp']:+.2f})" for e in ex)
+        )
     from scipy.stats import mannwhitneyu
+
     dc = [e["comp"] for e in scored if e["group"] == "diminutive"]
     cc = [e["comp"] for e in scored if e["group"] == "class_changing"]
     if dc and cc:

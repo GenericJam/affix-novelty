@@ -15,29 +15,77 @@ POSITION predicts: prefix drifts; BOTH suffix groups stay transparent.
 FUNCTION predicts: class-maintaining affixes drift (prefix AND suffix_CM); only
 class-changing suffixes stay transparent. So suffix_CM should pattern with prefix.
 """
+
+import gensim.downloader as api
 import numpy as np
 from scipy.stats import mannwhitneyu
-import gensim.downloader as api
-import core, morpholex_entries
+
+import core
+import morpholex_entries
 
 # Reliably class-MAINTAINING suffixes (preserve part of speech: N->N or A->A).
-SUFFIX_CM = {"hood", "ship", "let", "ling", "ster", "eer", "ese", "dom",
-             "ery", "ry", "age", "ist", "ism", "ite", "ling"}
+SUFFIX_CM = {
+    "hood",
+    "ship",
+    "let",
+    "ling",
+    "ster",
+    "eer",
+    "ese",
+    "dom",
+    "ery",
+    "ry",
+    "age",
+    "ist",
+    "ism",
+    "ite",
+}
 # Reliably class-CHANGING suffixes (assign/alter part of speech).
-SUFFIX_CC = {"tion", "ation", "sion", "ment", "ity", "ness", "er", "or",
-             "ize", "ise", "ate", "ify", "able", "ible", "ous", "ive",
-             "ful", "less", "ly", "al", "ial", "ic", "ical", "ant", "ent",
-             "ary", "ory", "ish", "ward", "wise", "y", "ine", "esque"}
+SUFFIX_CC = {
+    "tion",
+    "ation",
+    "sion",
+    "ment",
+    "ity",
+    "ness",
+    "er",
+    "or",
+    "ize",
+    "ise",
+    "ate",
+    "ify",
+    "able",
+    "ible",
+    "ous",
+    "ive",
+    "ful",
+    "less",
+    "ly",
+    "al",
+    "ial",
+    "ic",
+    "ical",
+    "ant",
+    "ent",
+    "ary",
+    "ory",
+    "ish",
+    "ward",
+    "wise",
+    "y",
+    "ine",
+    "esque",
+}
 
 
 def group_of(e):
     if e["side"] == "prefix":
-        return "prefix"            # all English prefixes are class-maintaining
+        return "prefix"  # all English prefixes are class-maintaining
     if e["affix"] in SUFFIX_CM:
         return "suffix_CM"
     if e["affix"] in SUFFIX_CC:
         return "suffix_CC"
-    return None                    # unclassified suffix, drop from the clean contrast
+    return None  # unclassified suffix, drop from the clean contrast
 
 
 def main():
@@ -65,14 +113,18 @@ def main():
     for g in ("prefix", "suffix_CM", "suffix_CC"):
         cs = np.array([e["comp"] for e in scored if e["grp"] == g])
         G[g] = cs
-        print(f"  {g:10s} n={len(cs):4d}  mean_comp={cs.mean():+.3f}  "
-              f"novel<0.15={(cs < 0.15).mean():.1%}")
+        print(
+            f"  {g:10s} n={len(cs):4d}  mean_comp={cs.mean():+.3f}  "
+            f"novel<0.15={(cs < 0.15).mean():.1%}"
+        )
 
     _, p_cm_cc = mannwhitneyu(G["suffix_CM"], G["suffix_CC"], alternative="less")
     _, p_cm_pre = mannwhitneyu(G["suffix_CM"], G["prefix"], alternative="two-sided")
     print(f"\n  suffix_CM more drifted than suffix_CC?  p={p_cm_cc:.2e}  (FUNCTION effect)")
-    print(f"  suffix_CM vs prefix (two-sided)?        p={p_cm_pre:.2e}  "
-          f"(large p => they pattern together, i.e. function not position)")
+    print(
+        f"  suffix_CM vs prefix (two-sided)?        p={p_cm_pre:.2e}  "
+        f"(large p => they pattern together, i.e. function not position)"
+    )
 
     print("\n  Reading: if suffix_CM clusters with prefix and far from suffix_CC,")
     print("  grammatical function drives the effect, not affix position.")

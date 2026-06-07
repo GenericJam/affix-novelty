@@ -1,5 +1,7 @@
 """Build English single-affix entries from MorphoLEX validated segmentation."""
+
 import re
+
 import openpyxl
 from wordfreq import word_frequency, zipf_frequency
 
@@ -7,9 +9,11 @@ WORD_FREQ_FLOOR = 1.5
 
 
 def _parse(seg):
-    return (re.findall(r"<([a-z]+)<", seg),
-            re.findall(r"\(([a-z]+)\)", seg),
-            re.findall(r">([a-z]+)>", seg))
+    return (
+        re.findall(r"<([a-z]+)<", seg),
+        re.findall(r"\(([a-z]+)\)", seg),
+        re.findall(r">([a-z]+)>", seg),
+    )
 
 
 def load(path="MorphoLEX_en.xlsx"):
@@ -20,7 +24,8 @@ def load(path="MorphoLEX_en.xlsx"):
         it = wb[sh].iter_rows(values_only=True)
         header = list(next(it))
         try:
-            wi = header.index("Word"); si = header.index("MorphoLexSegm")
+            wi = header.index("Word")
+            si = header.index("MorphoLexSegm")
         except ValueError:
             continue
         for r in it:
@@ -36,10 +41,12 @@ def load(path="MorphoLEX_en.xlsx"):
     def keep(p, ro, s, w):
         return len(ro) == 1 and zipf_frequency(w, "en") >= WORD_FREQ_FLOOR
 
-    pref = [(w, p[0], ro[0]) for w, p, ro, s in raw
-            if len(p) == 1 and len(s) == 0 and keep(p, ro, s, w)]
-    suff = [(w, s[0], ro[0]) for w, p, ro, s in raw
-            if len(p) == 0 and len(s) == 1 and keep(p, ro, s, w)]
+    pref = [
+        (w, p[0], ro[0]) for w, p, ro, s in raw if len(p) == 1 and len(s) == 0 and keep(p, ro, s, w)
+    ]
+    suff = [
+        (w, s[0], ro[0]) for w, p, ro, s in raw if len(p) == 0 and len(s) == 1 and keep(p, ro, s, w)
+    ]
 
     def make(items, side):
         # dedup inflections -> shortest (lemma), tie-break frequency
@@ -51,8 +58,16 @@ def load(path="MorphoLEX_en.xlsx"):
                 best[key] = (rank, w)
         out = []
         for (af, root), (_, w) in best.items():
-            out.append(dict(word=w, side=side, affix=af, root=root,
-                            freq=word_frequency(w, "en"), zipf=zipf_frequency(w, "en")))
+            out.append(
+                {
+                    "word": w,
+                    "side": side,
+                    "affix": af,
+                    "root": root,
+                    "freq": word_frequency(w, "en"),
+                    "zipf": zipf_frequency(w, "en"),
+                }
+            )
         return out
 
     return make(pref, "prefix") + make(suff, "suffix")

@@ -682,3 +682,48 @@ Clean confirmatory test to run next (no affix hand-coding): correlate each deriv
 word's NON-compositionality with its CONCRETENESS rating (Brysbaert et al. 2014,
 40k English words, free). If concrete derived words drift more than abstract ones,
 referentiality is supported on pure human data. This is the principled follow-up.
+
+## Test 8 result: concreteness (HUMAN track). Referentiality REAL but SMALL; prefix dominates.
+
+Joined each scored word to its Brysbaert (2014) concreteness rating (6664/8696
+matched), GloVe.
+```
+Spearman(concreteness, comp):  all r=-0.116  prefix r=-0.089  suffix r=-0.130  (all p<1e-3)
+suffix tertiles (abstract->concrete):  novel<0.15  14.2% -> 17.6% -> 23.1%
+standardized OLS  comp ~ conc + freq + is_prefix:
+  concreteness  beta=-0.121   (concrete -> drifted; referentiality confirmed)
+  log-frequency beta=+0.052   (weak; MORE frequent -> slightly MORE transparent)
+  is_prefix     beta=-0.311   (the dominant predictor)
+```
+Findings: (1) Referentiality is REAL but SMALL: concrete derived words drift more,
+monotonically (r~-0.12). Confirms the suffix gradient interpretation. (2) The
+PREFIX effect (beta=-0.31) is ~2.5x larger than concreteness and is NOT explained
+by concreteness or frequency. Prefixes drift for reasons concreteness does not
+capture (the etymological / bound-root / lexicalized-verb story). (3) Frequency,
+properly controlled, is weakly POSITIVE toward transparency, reconciling with
+Stupak & Baayen 2022 and Hay 2001, and revealing our earlier "frequency-widening"
+was partly a side confound. Net: the human picture is MULTI-FACTOR; every
+single-variable hypothesis (position, function, referentiality, frequency) is
+insufficient alone, and the prefix penalty is the biggest, least-explained piece.
+
+## Test 9 result: nonce-word generalization (LLM track). SUGGESTIVE, confounded.
+
+Does GPT-2 generalize the asymmetry to NOVEL words (internalized bias) or only
+memorize per-word? Generated 785 novel affix+root combos (wordfreq ~ 0), all
+genuinely compositional by construction (unsmall = not small; jumpness = state of
+jumping), scored in GPT-2 space with offsets learned from real words.
+```
+novel prefix words: mean_comp +0.400
+novel suffix words: mean_comp +0.690      p=1.0e-37
+```
+GPT-2 represents novel PREFIXED forms as far less compositional than novel SUFFIXED
+forms, despite both being equally compositional. Suggests an INTERNALIZED structural
+bias (generalization), not memorization, a genuine shared-mechanism candidate.
+
+CONFOUND (keeps this suggestive, not conclusive): the offset is learned from REAL
+words whose prefix side is more opaque, so the learned prefix offset may point in a
+drift-contaminated direction that mechanically fails to predict even a transparent
+novel prefix word, while the cleaner suffix offset transfers well. Two-pass offset
+cleaning should mitigate but may not fully. Clean control needed: learn offsets from
+transparent-only real words (top-quartile comp); if the novel-prefix gap persists,
+the bias is real; if it collapses, contamination explained it.

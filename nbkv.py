@@ -1,4 +1,5 @@
 """gensim-like loader for a per-language Numberbatch .npz."""
+
 import numpy as np
 
 

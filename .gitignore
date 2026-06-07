@@ -3,6 +3,8 @@ __pycache__/
 *.pyc
 # large external data: fetch with ./fetch_data.sh, do not commit
 MorphoLEX_en.xlsx
+brysbaert_concreteness.xlsx
 histwords/
 numberbatch/
 *.npz
+.pytest_cache/

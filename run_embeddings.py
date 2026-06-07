@@ -1,7 +1,12 @@
 """Run the English analysis across multiple embeddings (robustness check)."""
-import sys, json
+
+import json
+import sys
+
 import gensim.downloader as api
-import core, morpholex_entries
+
+import core
+import morpholex_entries
 
 EMBEDDINGS = sys.argv[1:] or ["glove-wiki-gigaword-300", "word2vec-google-news-300"]
 
@@ -17,5 +22,6 @@ for name in EMBEDDINGS:
     core.print_summary(name, s)
     results[name] = s
 
-json.dump(results, open("stats_embeddings.json", "w"), indent=2)
+with open("stats_embeddings.json", "w") as f:
+    json.dump(results, f, indent=2)
 print("\nwrote stats_embeddings.json")

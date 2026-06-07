@@ -8,8 +8,13 @@ transparency, so surviving it is a conservative check.)
 
 Then run Spanish / French / Italian / Portuguese with orthographic decomposition.
 """
+
 import json
-import core, morpholex_entries, ortho_entries, affixes
+
+import affixes
+import core
+import morpholex_entries
+import ortho_entries
 from nbkv import NBKV
 
 results = {}
@@ -36,9 +41,12 @@ for lang in ["es", "fr", "it", "pt"]:
     # a few example most-novel words each side for sanity
     for side in ("prefix", "suffix"):
         ex = sorted([e for e in scored if e["side"] == side], key=lambda e: e["comp"])[:6]
-        print(f"    most-novel {side}: " +
-              ", ".join(f"{e['word']}({e['affix']}+{e['root']},{e['comp']:+.2f})" for e in ex))
+        print(
+            f"    most-novel {side}: "
+            + ", ".join(f"{e['word']}({e['affix']}+{e['root']},{e['comp']:+.2f})" for e in ex)
+        )
     results[lang] = s
 
-json.dump(results, open("stats_crosslang.json", "w"), indent=2)
+with open("stats_crosslang.json", "w") as f:
+    json.dump(results, f, indent=2)
 print("\nwrote stats_crosslang.json")
