@@ -19,17 +19,23 @@ find that English prefixed words are non-compositional far more often than
 suffixed words, across embeddings, across the frequency range, and at the level
 of individual bound-root families. The asymmetry is stable across the 20th
 century and replicates in direction across four Romance languages. We then test
-two competing accounts. The serial-position account is challenged by a
-counterexample we report: class-maintaining diminutive suffixes drift far more
-than class-changing suffixes in Spanish and Italian, dissociating affix position
-from grammatical function and favoring function. A processing-order reading is
-tested with language models and fails a control: the asymmetry appears equally in
-an autoregressive model (GPT-2) and a bidirectional model (BERT), so it reflects
-distributional structure already present in the corpus rather than left-to-right
-processing. The robust result is the outcome (prefixed and class-maintaining
-affixes are less compositional); grammatical function predicts it better than
-serial position; and distributional embeddings measure the lexicalized state of a
-language, not the mechanism that produced it. We discuss the implications for
+candidate explanations and find the picture is multi-factor. A serial-position
+account is the original motivation, but a within-English test rejects the simplest
+grammatical-function variant of it (class-maintaining suffixes such as `-hood`,
+`-ship` are among the most transparent, not the least), and a concreteness analysis
+shows that referentiality, whether a derived word names a concrete thing, predicts
+drift independently but only weakly (standardized beta about -0.12). The dominant
+single predictor remains being a prefix (beta about -0.31), an effect not reducible
+to concreteness or frequency and largely traceable to Latinate bound-root families.
+We keep the human and language-model evidence on separate tracks, since the models
+are trained on human text and so cannot independently corroborate it; a
+bidirectional control (BERT) reproduces the asymmetry as strongly as an
+autoregressive model (GPT-2), showing the effect is distributional and not a product
+of left-to-right processing, while a nonce-word probe suggests, with a stated
+confound, that the model generalizes the pattern to forms it never saw. The
+dependable contributions are the measured cross-linguistic outcome, the
+position-versus-function dissociation, and a negative processing-order control;
+the mechanism of lexicalization is left open. We discuss the implications for
 studying lexicalization in language evolution.
 
 ## 1. Introduction
@@ -169,20 +175,40 @@ same frequency-widening (es 20.6/3.9, fr 15.9/6.8, it 18.1/4.2, pt 22.7/4.7; all
 prefix side in Romance through Latinate false splits (`invita = in + vita`), so
 this is corroborative in direction only, not a clean magnitude.
 
-### 3.5 Position versus function: a diminutive counterexample
+### 3.5 Position, function, and referentiality
 
-The serial-position and grammatical-function accounts are confounded in English. We
-separate them with class-maintaining suffixes: suffixes (root-first, so serial
-position predicts transparency) that do not change category (so grammatical function
-predicts drift). Holding position constant and varying function, diminutive and
-evaluative suffixes drift far more than class-changing suffixes, in both Spanish
-(28.1% versus 10.2% novel, p approximately 3.8e-19) and Italian (23.6% versus 8.3%,
-p approximately 8.3e-38). The diminutive suffixes even exceed the prefix novelty
-rates in the same languages, so a suffix subtype out-generates prefixes. This favors
-grammatical function over pure position. Caveat: short diminutive affixes attract
-more orthographic false splits than long class-changing affixes, so the magnitude is
-inflated, but the direction is large, significant in two languages, and matches the
-textbook status of diminutives as lexicalization machines (Jurafsky 1996).
+We tested two explanations beyond position. The first is grammatical function:
+English suffixes are mostly class-changing (and so regular), prefixes
+class-maintaining (and so free to drift). The Romance diminutives first looked like a
+clean dissociation: class-maintaining diminutive and evaluative suffixes drift far
+more than class-changing suffixes, in Spanish (28.1% versus 10.2% novel, p about
+3.8e-19) and Italian (23.6% versus 8.3%, p about 8.3e-38), even exceeding the prefix
+rates. But a cleaner within-English test on validated morphology rejects the simple
+function hypothesis. Grouping single-affix words into prefix, class-maintaining
+suffix, and class-changing suffix, the class-maintaining suffixes are the MOST
+transparent, not the least (novel below 0.15 of 15.6% versus 21.0% for class-changing
+versus 24.6% for prefixes). The English class-maintaining set is dominated by
+regular, transparent `-ism`/`-ist`/`-hood`/`-ship`; it is not a coherent drift class.
+So class-changing versus class-maintaining is not the variable.
+
+The per-suffix gradient points to a better one that cuts across part of speech:
+referentiality. Suffixes that NAME concrete things (`-er` agent or instrument,
+`-age`, `-ling`, `-ster`, `-ory` place, `-ine`/`-ite`/`-ate` substances) drift;
+suffixes for ABSTRACT qualities (`-ness`, `-ity`, `-ism`, `-est`) stay compositional.
+We tested this directly with concreteness norms (Brysbaert et al. 2014), with no
+affix hand-coding: a derived word's concreteness predicts its drift (Spearman r about
+-0.13 for suffixes; suffix novelty rises from 14.2% to 23.1% across the abstract-to-
+concrete tertiles). In a standardized regression controlling for frequency and side,
+concreteness has a real but small independent effect (beta about -0.12), being a
+prefix is the dominant predictor (beta about -0.31), and frequency is weakly toward
+transparency (beta about +0.05). So the Romance diminutive effect is real but is
+better read as referentiality (a diminutive names a specific thing, e.g. Spanish
+`bolsillo` "pocket") than as class-maintenance. The synchronic outcome is
+multi-factor: the prefix penalty dominates and is not explained by concreteness or
+frequency (it traces to the Latinate bound-root families of Section 3.1), with
+referentiality a smaller independent contributor. Caveat: the orthographic Romance
+and short-diminutive decompositions inflate magnitudes via false splits; the
+within-English and concreteness tests do not depend on them.
 
 ### 3.6 Language models, and a bidirectional control
 
@@ -207,6 +233,16 @@ property of the corpus, already present in static embeddings (Lazaridou et al.
 results, like the static embeddings, measure the lexicalized outcome, not the
 mechanism that produced it.
 
+A separate probe asks whether GPT-2 GENERALIZES the asymmetry to novel words it never
+saw, which would indicate an internalized bias rather than inherited per-word
+meanings. On 785 novel affix-plus-root combinations, all genuinely compositional by
+construction (`unsmall` = not small; `jumpness` = state of jumping), GPT-2 represents
+the novel prefixed forms as much less compositional than the novel suffixed forms
+(mean +0.40 versus +0.69, p about 1e-37). This is suggestive of generalization, but
+it is confounded: the offsets are learned from real words whose prefix side is more
+opaque, which could mechanically depress novel-prefix scores. A control that learns
+offsets from transparent-only words is needed before drawing a firm conclusion.
+
 ### 3.7 Family coherence (English and Arabic)
 
 A second, independent metric agrees. Grouping English words by root and measuring
@@ -228,24 +264,35 @@ family-coherence metric agrees. This outcome is solid and, in direction, was
 already foreshadowed by distributional semantics (Lazaridou et al. 2013) and by the
 processing account of the suffixing preference (Cutler, Hawkins & Gilligan 1985).
 
-On mechanism, our two diagnostic tests pull against the simplest serial-position
-story. First, the diminutive counterexample: class-maintaining suffixes drift far
-more than class-changing suffixes, even out-drifting prefixes, with position held
-constant. This says grammatical function (whether the affix does a regular
-class-changing job) is doing real work that pure position cannot explain. Second,
-the bidirectional control: BERT reproduces the asymmetry as strongly as GPT-2, so
-the effect is distributional rather than a product of left-to-right processing.
-Together these favor a function-based reading of the synchronic outcome and remove
-the language model as evidence for a processing-order mechanism.
+On mechanism, the simple single-variable stories all fail. The serial-position
+account motivated the study, but the tests undercut it as the synchronic
+explanation. Its grammatical-function variant is rejected within English: the
+class-maintaining suffixes are the most transparent, not the least, so it is not
+class-change that protects compositionality. What does carry a real, if small,
+independent signal is referentiality: concrete-naming derivations drift more than
+abstract ones (concreteness beta about -0.12), which reinterprets the Romance
+diminutive effect (a diminutive names a concrete thing) without supporting the
+function account. The dominant factor is simply being a prefix (beta about -0.31),
+unexplained by concreteness or frequency and traceable to the Latinate bound-root
+families. The synchronic outcome is multi-factor, with no single variable
+sufficient.
 
-This clarifies what distributional embeddings can and cannot show here. Every
-embedding, static or contextual, autoregressive or bidirectional, measures the
-present lexicalized state of the language; none of them observes the historical
-process that produced it. The serial-position hypothesis is a claim about that
-process (how forms lexicalize over time), and our synchronic measurements cannot
-adjudicate it. The diachronic data are consistent with the outcome being old and
-stable (already in place by 1890), but the recent-century window shows no
-acceleration, so it does not catch the process in motion either.
+We keep the human and language-model evidence on separate tracks. The models are
+trained on human text, so an LLM reproducing the asymmetry is inheritance, not
+independent corroboration; lumping the two would double-count. On its own the LLM
+track says the asymmetry is distributional, since a bidirectional model shows it as
+strongly as an autoregressive one and so it is not a processing-order signature; a
+nonce-word probe hints, with a confound, that the model generalizes it to unseen
+forms. That probe is the only place the model could report something the human
+distribution did not already contain, and it needs a control before it can.
+
+This clarifies what distributional embeddings can and cannot show. Every embedding,
+static or contextual, autoregressive or bidirectional, measures the present
+lexicalized state of the language, not the historical process that produced it. The
+serial-position hypothesis is a claim about that process, and our synchronic
+measurements cannot adjudicate it. The diachronic data are consistent with the
+outcome being old and stable (already in place by 1890) but show no recent-century
+acceleration, so they do not catch the process in motion either.
 
 ## 5. Limitations
 
@@ -277,17 +324,21 @@ their coining date, where the process can actually be observed.
 Prefixed words lose compositional meaning more than suffixed words, robustly in
 English and in direction across embeddings, time, and four Romance languages, and
 the same asymmetry is present in both autoregressive and bidirectional language
-models. Two diagnostic tests then constrain the explanation. A diminutive
-counterexample shows that class-maintaining suffixes drift more than class-changing
-ones, so grammatical function, not affix position alone, drives the synchronic
-pattern. A bidirectional control shows the language-model asymmetry is distributional
-rather than a product of left-to-right processing. The serial-position hypothesis,
-the original motivation, is not supported by these tests as the synchronic
-mechanism, though it remains a live hypothesis about the historical process that
-our distributional measurements cannot reach. The dependable contribution is the
-measured outcome and the position-versus-function dissociation; the mechanism of
-lexicalization, and whether processing order contributes to it over historical
-time, is left open for diachronic and behavioral work.
+models. The explanation is multi-factor rather than any single variable. The
+grammatical-function hypothesis (class-changing versus class-maintaining) is rejected
+within English; referentiality, whether a derived word names a concrete thing, has a
+real but small independent effect that reinterprets the Romance diminutives; and the
+dominant factor is simply being a prefix, an effect traceable to Latinate bound-root
+families and not reducible to concreteness or frequency. We keep the human and
+language-model evidence separate, because the models are trained on human text and so
+inherit rather than corroborate the pattern; a bidirectional control shows the
+model asymmetry is distributional, not a product of left-to-right processing. The
+serial-position hypothesis that motivated the work is not supported as the synchronic
+mechanism, though it remains a live hypothesis about the historical process that our
+distributional measurements cannot reach. The dependable contributions are the
+measured cross-linguistic outcome, the position-versus-function dissociation, and a
+negative processing-order control; the mechanism of lexicalization is left open for
+diachronic and behavioral work.
 
 ## Data and code availability
 
@@ -301,6 +352,7 @@ Analysis and drafting were carried out with AI coding assistance (Claude Opus).
 
 ## References
 
+- Brysbaert, M., Warriner, A. B., & Kuperman, V. (2014). Concreteness ratings for 40 thousand generally known English word lemmas. *Behavior Research Methods*, 46(3), 904-911.
 - Bybee, J. (2010). *Language, Usage and Cognition*. Cambridge University Press.
 - Cutler, A., Hawkins, J. A., & Gilligan, G. (1985). The suffixing preference: a processing explanation. *Linguistics*, 23(5), 723-758.
 - Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. *NAACL-HLT*.
